@@ -27,7 +27,7 @@ export default function App() {
   // only forecasts published before the target time could ever have been used
   const horizon = ok ? d.by_horizon.filter((h) => h.lead_h >= 0)
     .map((h) => ({ ...h, label: `${h.lead_h}–${h.lead_h + 6}h` })) : [];
-  const series = ok ? d.series.map((s) => ({ ...s, t: s.t.slice(5, 16).replace("T", " ") })) : [];
+  const series = ok ? d.series.map((s) => ({ ...s, band: [Math.max(0, s.band[0]), s.band[1]], t: s.t.slice(5, 16).replace("T", " ") })) : [];
   const worst = ok && d.by_hour.length ? d.by_hour.reduce((a, b) => (b.mae > a.mae ? b : a)) : null;
   const best = ok && d.by_hour.length ? d.by_hour.reduce((a, b) => (b.mae < a.mae ? b : a)) : null;
   const near = horizon[0], far = horizon[horizon.length - 1];
@@ -87,7 +87,7 @@ export default function App() {
                 <Tooltip {...tip}
                   formatter={(v, name) => name === "Likely range"
                     ? [`${n0(v[0])} to ${n0(v[1])} MW`, name] : [`${n0(v)} MW`, name]} />
-                <Area dataKey="band" name="Likely range" stroke="none" fill="rgba(217,72,15,.16)" isAnimationActive={false} />
+                <Area dataKey="band" name="Likely range" stroke="#9a3412" strokeOpacity={0} fill="rgba(217,72,15,.16)" isAnimationActive={false} />
                 <Line dataKey="forecast" name="Forecast" stroke={COL.fc} dot={false} strokeWidth={2} isAnimationActive={false} />
                 <Line dataKey="actual" name="Actual" stroke={COL.ac} dot={false} strokeWidth={1.5} isAnimationActive={false} />
               </ComposedChart>

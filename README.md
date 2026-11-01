@@ -28,4 +28,4 @@ MAPE ignores half-hours with actual < 100 MW.
 ## Deploy
 Backend: Render/Heroku (Dockerfile honours `$PORT`). Frontend: Vercel, root `frontend`, env `VITE_API_URL=<backend url>`.
 
-Live app: _add link_
+Live app: https://kq7xw-pink.vercel.app/ (backend: https://kq7xw.onrender.com)
